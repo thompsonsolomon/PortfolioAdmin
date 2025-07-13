@@ -10,6 +10,7 @@ import ProjectsPage from "./components/ProjectsPage";
 import ProjectForm from "./components/ProjectForm";
 import TestimonialsPage from "./components/TestimonialsPage";
 import SubmitTestimonial from "./components/AddTestimonial";
+import NotFound404 from "./components/notFound";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <AuthProvider>
         <Routes>
               <Route path="add_testimonial" element={<SubmitTestimonial />} />
+              <Route path="*" element={<NotFound404 />} />
           {/* Admin Routes */}
           <Route path="/login" element={<Login />} />
           <Route

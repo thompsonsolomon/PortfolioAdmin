@@ -54,7 +54,7 @@ const ProjectsPage = () => {
           <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
           <p className="text-gray-600">Manage your project portfolio</p>
         </div>
-        <Link to="/admin/projects/new" className="btn-primary flex items-center">
+        <Link to="/projects/new" className="btn-primary flex items-center">
           <Plus size={20} className="mr-2" />
           Add Project
         </Link>
@@ -65,7 +65,7 @@ const ProjectsPage = () => {
           <FolderOpen size={48} className="mx-auto text-gray-400 mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No projects yet</h3>
           <p className="text-gray-600 mb-6">Start by adding your first project</p>
-          <Link to="/admin/projects/new" className="btn-primary">
+          <Link to="/projects/new" className="btn-primary">
             Add Project
           </Link>
         </div>
@@ -81,7 +81,7 @@ const ProjectsPage = () => {
                 />
                 <div className="absolute top-2 right-2 flex space-x-2">
                   <Link
-                    to={`/admin/projects/edit/${project.id}`}
+                    to={`/projects/edit/${project.id}`}
                     className="p-2 bg-white bg-opacity-90 text-gray-600 hover:text-primary-600 rounded-lg transition-colors"
                   >
                     <Edit size={16} />

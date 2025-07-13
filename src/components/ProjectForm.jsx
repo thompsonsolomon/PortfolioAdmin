@@ -102,8 +102,7 @@ const ProjectForm = () => {
         await addProject(projectData)
         // toast.success("Project added successfully")
       }
-      p
-      navigate("/admin/projects")
+      navigate("/projects")
     } catch (error) {
       console.error("Error saving project:", error)
       // toast.error("Failed to save project")
@@ -116,7 +115,7 @@ const ProjectForm = () => {
     <div>
       <div className="flex items-center mb-8">
         <button
-          onClick={() => navigate("/admin/projects")}
+          onClick={() => navigate("/projects")}
           className="mr-4 p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg"
         >
           <ArrowLeft size={20} />
@@ -266,7 +265,7 @@ const ProjectForm = () => {
 
           {/* Submit Button */}
           <div className="flex justify-end space-x-4 pt-6 border-t">
-            <button type="button" onClick={() => navigate("/admin/projects")} className="btn-secondary">
+            <button type="button" onClick={() => navigate("/projects")} className="btn-secondary">
               Cancel
             </button>
             <button type="submit" disabled={loading} className="btn-primary flex items-center">

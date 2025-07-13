@@ -55,7 +55,7 @@ const ExperiencesPage = () => {
           <h1 className="text-3xl font-bold text-white">Work Experiences</h1>
           <p className="text-gray-600">Manage your work experience entries</p>
         </div>
-        <Link to="/admin/experiences/new" className="btn-primary flex items-center">
+        <Link to="/experiences/new" className="btn-primary flex items-center">
           <Plus size={20} className="mr-2" />
           Add Experience
         </Link>
@@ -66,7 +66,7 @@ const ExperiencesPage = () => {
           <Building size={48} className="mx-auto text-gray-400 mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">No experiences yet</h3>
           <p className="text-gray-600 mb-6">Start by adding your first work experience</p>
-          <Link to="/admin/experiences/new" className="btn-primary">
+          <Link to="/experiences/new" className="btn-primary">
             Add Experience
           </Link>
         </div>
@@ -117,7 +117,7 @@ const ExperiencesPage = () => {
                 </div>
                 <div className="flex items-center space-x-2 ml-4">
                   <Link
-                    to={`/admin/experiences/edit/${experience.id}`}
+                    to={`/experiences/edit/${experience.id}`}
                     className="p-2 text-gray-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
                   >
                     <Edit size={18} />
