@@ -27,19 +27,44 @@ const TestimonialsPage = () => {
     }
   }
 
-  const handleApprove = async (id) => {
+  // const handleApprove = async (id) => {
+  //   setActionLoading(id)
+  //   try {
+  //     await approveTestimonial(id)
+  //     setTestimonials(testimonials.map((t) => (t.id === id ? { ...t, status: "approved" } : t)))
+  //     // toast.success("Testimonial approved successfully")
+  //   } catch (error) {
+  //     console.error("Error approving testimonial:", error)
+  //     // toast.error("Failed to approve testimonial")
+  //   } finally {
+  //     setActionLoading(null)
+  //   }
+  // }
+
+  const handleApprove = async (id, currentStatus) => {
     setActionLoading(id)
+    const newStatus = currentStatus === "approved" ? "pending" : "approved"
+
     try {
-      await approveTestimonial(id)
-      setTestimonials(testimonials.map((t) => (t.id === id ? { ...t, status: "approved" } : t)))
-      toast.success("Testimonial approved successfully")
+      await updateTestimonial(id, { status: newStatus })
+      setTestimonials(
+        testimonials.map((t) =>
+          t.id === id ? { ...t, status: newStatus } : t
+        )
+      )
+      // toast.success(
+      //   newStatus === "approved"
+      //     ? "Testimonial approved successfully"
+      //     : "Testimonial disapproved successfully"
+      // )
     } catch (error) {
-      console.error("Error approving testimonial:", error)
-      toast.error("Failed to approve testimonial")
+      console.error("Error updating testimonial:", error)
+      // toast.error("Failed to update testimonial status")
     } finally {
       setActionLoading(null)
     }
   }
+
 
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete the testimonial from ${name}?`)) {
@@ -113,25 +138,22 @@ const TestimonialsPage = () => {
         <div className="flex space-x-2">
           <button
             onClick={() => setFilter("all")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === "all" ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === "all" ? "bg-primary-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
           >
             All ({testimonials.length})
           </button>
           <button
             onClick={() => setFilter("pending")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === "pending" ? "bg-yellow-800 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === "pending" ? "bg-yellow-800 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
           >
             Pending ({pendingCount})
           </button>
           <button
             onClick={() => setFilter("approved")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              filter === "approved" ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filter === "approved" ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
           >
             Approved ({approvedCount})
           </button>
@@ -159,7 +181,7 @@ const TestimonialsPage = () => {
           {filteredTestimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className={`card p-3 rounded-md ${testimonial.status === "pending" ? "border-yellow-200 bg-gray-900" : "bg-blue-400"}`}
+              className={`p-3 rounded-md ${testimonial.status === "pending" ? "border-yellow-200 bg-gray-900" : "bg-blue-400"}`}
             >
               {editingId === testimonial.id ? (
                 // Edit Mode
@@ -222,7 +244,7 @@ const TestimonialsPage = () => {
                       <img
                         src={testimonial.photoUrl || "/placeholder.svg?height=60&width=60"}
                         alt={testimonial.name}
-                        className="w-15 h-15 rounded-full object-cover"
+                        className="w-[100px] h-[100px] rounded-full object-cover"
                       />
                       <div>
                         <h3 className="text-lg font-semibold">{testimonial.name}</h3>
@@ -238,11 +260,12 @@ const TestimonialsPage = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          testimonial.status === "approved"
+                        onClick={() => handleApprove(testimonial.id, testimonial.status)}
+                        disabled={actionLoading === testimonial.id}
+                        className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${testimonial.status === "approved"
                             ? "bg-green-100 text-green-800"
                             : "bg-yellow-100 text-yellow-800"
-                        }`}
+                          }`}
                       >
                         {testimonial.status === "approved" ? "Approved" : "Pending"}
                       </span>
@@ -259,8 +282,7 @@ const TestimonialsPage = () => {
                     <div className="flex items-center space-x-2">
                       {testimonial.status === "pending" && (
                         <button
-                          onClick={() => handleApprove(testimonial.id)}
-                          disabled={actionLoading === testimonial.id}
+
                           className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
                           title="Approve testimonial"
                         >
